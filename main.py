@@ -46,7 +46,7 @@ expressions = [
         [1, "assets/item1.png"],
         [2, "assets/item2.png"],
         [-1, "assets/item3.png"],
-        [4, "assets/item4.png"],
+        [3.5, "assets/item4.png"],
         [5, "assets/item5.png"]]
 exp = (random.choice(expressions))
 constant = num/exp[0]
@@ -200,4 +200,5 @@ while status:
 
 # 4. Quit Pygame
 pygame.quit()
+
 
