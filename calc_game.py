@@ -5,6 +5,8 @@ from sys import exit
 import os
 
 pygame.init()
+SCREEN_HEIGHT = 500
+SCREEN_WIDTH = 500
 
 IMAGE_FOLDER = "assets"
 
@@ -54,7 +56,7 @@ def Calc(string):
                 nums.pop(i+1)
                 break
             # print(nums)
-    print(round(float(nums[0]),2))
+    return round(float(nums[0]),2)
 
 def spawn_enemy():
 
@@ -62,18 +64,18 @@ def spawn_enemy():
             random.shuffle(images)
             i = 0
 
-win = pygame.display.set_mode((500,500))
+win = pygame.display.set_mode((SCREEN_HEIGHT,SCREEN_WIDTH), pygame.RESIZABLE)
 pygame.display.set_caption("First Game")
 images = ["0.png","1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png","plus.png","minus.png","multiply.png","divide.png", "equal.png"]
 random.shuffle(images)
-player_x = 250
-player_y = 450
+player_x = win.get_width()/2
+player_y = win.get_height() - 50
 width = 40
-height = 60
+height = 50
 vel = 5
 
 
-enemy_x = 250
+enemy_x = win.get_width()/2
 enemy_y = 0
 enemy_width = 32 
 enemy_height = 32
@@ -82,7 +84,7 @@ class Enemy:
     def __init__(self, image_name):
         image_path = os.path.join(IMAGE_FOLDER, image_name)  # <- Here
         self.image = pygame.image.load(image_path)
-        self.x = random.randint(32, 500 - 32)
+        self.x = random.randint(32, win.get_width() - 32)
         self.y = 0
         self.speed = vel + (random.randint(-2,2))
         
@@ -127,6 +129,9 @@ print(enemies)
 print("AGGGGGGG")
 i=0
 while run:
+    myfont = pygame.font.SysFont("monospace", (round(64*500/win.get_width())))
+
+# render text
     
     pygame.time.Clock().tick(60) 
     
@@ -148,9 +153,14 @@ while run:
     # if keys[pygame.K_DOWN]:
     #     y += vel
         
+    player_y = win.get_height() - 50
+
 
     
     win.fill((255,255,255))  # Fills the screen with black
+    text = myfont.render(str(''.join(equation)), 1, (0,0,0))
+    text_rect = text.get_rect(center=(win.get_width()/2, 50))
+    win.blit(text,text_rect)
     pygame.draw.rect(win, (255,0,0), (player_x, player_y, width, height))   
     for i in range(len(enemies)):
         enemy = enemies[i]
@@ -179,7 +189,8 @@ while run:
                 print("Evaluating:", expr)
                 run = False
                 try:
-                    Calc(expr)
+                    result = Calc(expr)
+                    print(result)
                     
                 except Exception as e:
                     print("Error:", e)
@@ -188,7 +199,33 @@ while run:
             enemies[i] = get_new_enemy()
 
     pygame.display.update()
+show_result = True
+while show_result:
+    pygame.time.Clock().tick(60)
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            show_result = False
 
+    win.fill((255, 255, 255))
+
+    # Scalable box centered
+    box_width = win.get_width() // 3
+    box_height = win.get_height() // 4
+    box_x = win.get_width() // 2 - box_width // 2
+    box_y = win.get_height() // 2 - box_height // 2
+
+    pygame.draw.rect(win, (0, 0, 0), (box_x - 2, box_y - 2, box_width + 4, box_height + 4))  # Border
+    pygame.draw.rect(win, (255, 0, 0), (box_x, box_y, box_width, box_height))
+
+    # Scalable text in center
+    font_size = min(box_width, box_height) // 2
+    result_font = pygame.font.SysFont("monospace", font_size)
+    result_text = result_font.render(str(result), True, (255, 255, 255))
+    result_rect = result_text.get_rect(center=(win.get_width() // 2, win.get_height() // 2))
+    win.blit(result_text, result_rect)
+
+    pygame.display.update()
 
 pygame.quit()
 
