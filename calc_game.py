@@ -174,7 +174,7 @@ while run:
                 equation.append(enemy.value)
                 
 
-            if enemy.value == "=":
+            if enemy.value == "=" and len(equation) != 0:
                 expr = ''.join(equation)  
                 print("Evaluating:", expr)
                 run = False
