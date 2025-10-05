@@ -42,12 +42,12 @@ except ValueError:
     sys.exit()
 
 expressions = [
-        [1, "assets/item0.png"],
+        [28, "assets/item0.png"],
         [1, "assets/item1.png"],
-        [1, "assets/item2.png"],
-        [1, "assets/item3.png"],
-        [-1, "assets/item4.png"],
-        [4, "assets/item5.png"]]
+        [2, "assets/item2.png"],
+        [-1, "assets/item3.png"],
+        [4, "assets/item4.png"],
+        [5, "assets/item5.png"]]
 exp = (random.choice(expressions))
 constant = num/exp[0]
 # -------------------------------
