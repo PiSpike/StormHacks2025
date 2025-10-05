@@ -54,7 +54,7 @@ def Calc(string):
                 nums.pop(i+1)
                 break
             # print(nums)
-    print(round(nums[0],2))
+    print(round(float(nums[0]),2))
 
 def spawn_enemy():
 
@@ -70,7 +70,7 @@ player_x = 250
 player_y = 450
 width = 40
 height = 60
-vel = 20
+vel = 5
 
 
 enemy_x = 250
@@ -84,7 +84,7 @@ class Enemy:
         self.image = pygame.image.load(image_path)
         self.x = random.randint(32, 500 - 32)
         self.y = 0
-        self.speed = vel
+        self.speed = vel + (random.randint(-2,2))
         
         if str(image_name[0]).isnumeric():
             self.value = image_name.strip(".png")
@@ -100,7 +100,7 @@ class Enemy:
             elif image_name == 'equal.png':
                 self.value = '='   
     def move(self):
-            self.y += self.speed + (random.randint(-10,10))
+            self.y += self.speed 
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
@@ -128,7 +128,7 @@ print("AGGGGGGG")
 i=0
 while run:
     
-    pygame.time.delay(100)
+    pygame.time.Clock().tick(60) 
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
