@@ -63,12 +63,12 @@ font_button = pygame.font.Font('freesansbold.ttf', 30)
 font_array = pygame.font.Font('freesansbold.ttf', 20) # Font for the number array
 
 # --- Text Surfaces for State 0 (Begin Screen) ---
-array_text_surface = font_array.render(display_numbers_text, True, WHITE)
+array_text_surface = font_array.render(display_numbers_text, True, BLACK)
 array_text_rect = array_text_surface.get_rect()
 
 # --- Text Surfaces for State 1 (Result Screen) ---
-title_text_surface = font_title.render('Your answer is:', True, WHITE)
-coefficient = font_side.render(str(format_number(constant)), True, WHITE)
+title_text_surface = font_title.render('Your answer is:', True, BLACK)
+coefficient = font_side.render(str(format_number(constant)), True, BLACK)
 
 # Load Image
 try:
@@ -182,7 +182,7 @@ while status:
                     game_state = 1 # Change state to show the answer!
 
     # Drawing
-    screen.fill(BLACK) # Clear screen
+    screen.fill(WHITE) # Clear screen
 
     if game_state == 0:
         # State 0: Draw the Number Array Text and the BEGIN button
